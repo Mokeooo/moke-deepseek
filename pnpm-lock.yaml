@@ -1,0 +1,120 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  log:
+    specifier: ^6.3.2
+    version: 6.3.2
+
+devDependencies:
+  '@types/log':
+    specifier: ^6.3.3
+    version: 6.3.3
+
+packages:
+
+  /@types/log@6.3.3:
+    resolution: {integrity: sha512-/CWUZ2eG2ZGLrRbM21UP7gH/3zEfv3AqH11Lr6NxitR1IJAHcPcIOAj76XNM7Y/6CP1dJJYzNvDF7ZKV9IoWPQ==}
+    dev: true
+
+  /d@1.0.2:
+    resolution: {integrity: sha512-MOqHvMWF9/9MX6nza0KgvFH4HpMU0EF5uUDXqX/BtxtU8NfB0QzRtJ8Oe/6SuS4kbhyzVJwjd97EA4PKrzJ8bw==}
+    engines: {node: '>=0.12'}
+    dependencies:
+      es5-ext: 0.10.64
+      type: 2.7.3
+    dev: false
+
+  /duration@0.2.2:
+    resolution: {integrity: sha512-06kgtea+bGreF5eKYgI/36A6pLXggY7oR4p1pq4SmdFBn1ReOL5D8RhG64VrqfTTKNucqqtBAwEj8aB88mcqrg==}
+    dependencies:
+      d: 1.0.2
+      es5-ext: 0.10.64
+    dev: false
+
+  /es5-ext@0.10.64:
+    resolution: {integrity: sha512-p2snDhiLaXe6dahss1LddxqEm+SkuDvV8dnIQG0MWjyHpcMNfXKPE+/Cc0y+PhxJX3A4xGNeFCj5oc0BUh6deg==}
+    engines: {node: '>=0.10'}
+    requiresBuild: true
+    dependencies:
+      es6-iterator: 2.0.3
+      es6-symbol: 3.1.4
+      esniff: 2.0.1
+      next-tick: 1.1.0
+    dev: false
+
+  /es6-iterator@2.0.3:
+    resolution: {integrity: sha512-zw4SRzoUkd+cl+ZoE15A9o1oQd920Bb0iOJMQkQhl3jNc03YqVjAhG7scf9C5KWRU/R13Orf588uCC6525o02g==}
+    dependencies:
+      d: 1.0.2
+      es5-ext: 0.10.64
+      es6-symbol: 3.1.4
+    dev: false
+
+  /es6-symbol@3.1.4:
+    resolution: {integrity: sha512-U9bFFjX8tFiATgtkJ1zg25+KviIXpgRvRHS8sau3GfhVzThRQrOeksPeT0BWW2MNZs1OEWJ1DPXOQMn0KKRkvg==}
+    engines: {node: '>=0.12'}
+    dependencies:
+      d: 1.0.2
+      ext: 1.7.0
+    dev: false
+
+  /esniff@2.0.1:
+    resolution: {integrity: sha512-kTUIGKQ/mDPFoJ0oVfcmyJn4iBDRptjNVIzwIFR7tqWXdVI9xfA2RMwY/gbSpJG3lkdWNEjLap/NqVHZiJsdfg==}
+    engines: {node: '>=0.10'}
+    dependencies:
+      d: 1.0.2
+      es5-ext: 0.10.64
+      event-emitter: 0.3.5
+      type: 2.7.3
+    dev: false
+
+  /event-emitter@0.3.5:
+    resolution: {integrity: sha512-D9rRn9y7kLPnJ+hMq7S/nhvoKwwvVJahBi2BPmx3bvbsEdK3W9ii8cBSGjP+72/LnM4n6fo3+dkCX5FeTQruXA==}
+    dependencies:
+      d: 1.0.2
+      es5-ext: 0.10.64
+    dev: false
+
+  /ext@1.7.0:
+    resolution: {integrity: sha512-6hxeJYaL110a9b5TEJSj0gojyHQAmA2ch5Os+ySCiA1QGdS697XWY1pzsrSjqA9LDEEgdB/KypIlR59RcLuHYw==}
+    dependencies:
+      type: 2.7.3
+    dev: false
+
+  /log@6.3.2:
+    resolution: {integrity: sha512-ek8NRg/OPvS9ISOJNWNAz5vZcpYacWNFDWNJjj5OXsc6YuKacfey6wF04cXz/tOJIVrZ2nGSkHpAY5qKtF6ISg==}
+    engines: {node: '>=0.12'}
+    dependencies:
+      d: 1.0.2
+      duration: 0.2.2
+      es5-ext: 0.10.64
+      event-emitter: 0.3.5
+      sprintf-kit: 2.0.2
+      type: 2.7.3
+      uni-global: 1.0.0
+    dev: false
+
+  /next-tick@1.1.0:
+    resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
+    dev: false
+
+  /sprintf-kit@2.0.2:
+    resolution: {integrity: sha512-lnapdj6W4LflHZGKvl9eVkz5YF0xaTrqpRWVA4cNVOTedwqifIP8ooGImldzT/4IAN5KXFQAyXTdLidYVQdyag==}
+    engines: {node: '>=0.12'}
+    dependencies:
+      es5-ext: 0.10.64
+    dev: false
+
+  /type@2.7.3:
+    resolution: {integrity: sha512-8j+1QmAbPvLZow5Qpi6NCaN8FB60p/6x8/vfNqOk/hC+HuvFZhL4+WfekuhQLiqFZXOgQdrs3B+XxEmCc6b3FQ==}
+    dev: false
+
+  /uni-global@1.0.0:
+    resolution: {integrity: sha512-WWM3HP+siTxzIWPNUg7hZ4XO8clKi6NoCAJJWnuRL+BAqyFXF8gC03WNyTefGoUXYc47uYgXxpKLIEvo65PEHw==}
+    dependencies:
+      type: 2.7.3
+    dev: false

@@ -41,6 +41,24 @@ const sendQuestion = async (question: string) => {
     streamText.value += chunk;
   }
 };
+const getHistoryData = async () => {
+  const response = await fetch(`http://localhost:3002/deepseek/getHistory`, {
+    method: "GET",
+  });
+  const reader = response.body?.getReader();
+  const decoder = new TextDecoder();
+
+  const data = decoder.decode((await reader!.read()).value);
+  const { data: res } = JSON.parse(data);
+  res.forEach((v) => {
+    if (v.content) {
+      answers.value.push(v.content);
+    } else {
+      questions.value.push(v.question || "暂无回答");
+    }
+  });
+};
+getHistoryData();
 const deepseekApi = async () => {
   // const res = await fetch(`http://localhost:3000/users`);
   // console.log(res);
@@ -64,7 +82,6 @@ const handleSend = () => {
             <p
               class="markdown-body"
               v-html="md.render(answers[index] ? answers[index] : streamText)"
-              v-loading="!answers[index]"
             ></p>
           </template>
         </el-main>

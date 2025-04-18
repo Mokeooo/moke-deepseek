@@ -3,12 +3,16 @@ import OpenAI from "openai";
 import env from "dotenv";
 import { STATUS_CODE } from "../constant/status-code";
 import { ChatCompletionMessageParam } from "openai/resources/chat";
+import { baseDao } from "../modules/base-dao";
 
 type Role = "developer" | "system" | "user" | "assistant" | "tool";
 
 env.config();
 
 const router = new Router();
+
+const DpQuestion = baseDao.getTableModel("DeepseekQuestions");
+
 router.prefix("/deepseek");
 
 router.post("/", async function (ctx, next) {
@@ -17,6 +21,11 @@ router.post("/", async function (ctx, next) {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
     Connection: "keep-alive",
+  });
+  await DpQuestion?.create({
+    question,
+    role: "user",
+    content: "",
   });
   ctx.respond = false;
   const stream = await getDeepSeekResponse(question as string);
@@ -28,7 +37,25 @@ router.post("/", async function (ctx, next) {
     responseMsg += content;
   }
   historyMsg.push({ content: responseMsg, role: "assistant" });
+  await DpQuestion?.create({
+    question,
+    role: "assistant",
+    content: responseMsg,
+  });
   ctx.res.end();
+});
+
+router.get("/getHistory", async (ctx) => {
+  ctx.set({
+    "Cache-Control": "no-cache",
+  });
+  ctx.res.statusCode = STATUS_CODE.SUCCESS;
+  const data = await DpQuestion?.findAll();
+
+  ctx.body = {
+    data,
+  };
+  return ctx;
 });
 
 const openai = new OpenAI({
@@ -46,7 +73,6 @@ async function getDeepSeekResponse(msg: string) {
     stream: true,
     temperature: 0.2,
   });
-
   return stream;
 }
 

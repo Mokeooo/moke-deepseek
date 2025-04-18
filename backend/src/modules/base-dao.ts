@@ -1,7 +1,7 @@
 import dbConfig from "../config/db";
 import { type Dialect } from "sequelize";
-import { Sequelize } from "sequelize-typescript";
-import path from "path";
+import { Sequelize, Model } from "sequelize-typescript";
+import fs from "fs";
 
 const DATABASE = "mysql";
 
@@ -22,15 +22,21 @@ class BaseDao {
         timestamps: false, // true 表示给模型加上时间戳属性 (createAt,updateAt),false 标识不带时间戳属性
         freezeTableName: true, // true 标识使用给定的表名, false 标识模型后名加s作为表名
       },
+      models: [__dirname + "/decorModel/*.ts"],
     });
   }
-
-  addModels() {
-    const modelPath = path.join(process.cwd(), "/src/modules/decorModel");
-    this.sequelize.addModels([modelPath]);
+  getTableModel(name: string) {
+    const modelNames = Reflect.ownKeys(this.sequelize.models);
+    // console.log(modelNames);
+    
+    if (modelNames.includes(name)) return this.getAllTables()[name];
+    console.warn(`cannot find the table model using ${name}`);
+  }
+  getAllTables() {
+    return this.sequelize.models;
   }
 }
 
 const baseDao = BaseDao.baseDao;
-baseDao.addModels();
-export const { sequelize } = baseDao;
+
+export { baseDao };

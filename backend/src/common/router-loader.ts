@@ -18,10 +18,7 @@ class RouterLoader {
     this.app.use(router.routes());
     this.listen();
   }
-  /**
-   * @description: 动载加载路由模块
-   * @return {*}
-   */
+
   loadAllRouter() {
     // 获取一级路由
     const rootRouter = this.getRootRouter();
