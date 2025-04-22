@@ -4,7 +4,9 @@ import env from "dotenv";
 import { STATUS_CODE } from "../constant/status-code";
 import { ChatCompletionMessageParam } from "openai/resources/chat";
 import { baseDao } from "../modules/base-dao";
-
+import { getWeather } from "../function-calling/get-weather";
+import { toolsMap } from "../function-calling/index";
+import { getLocation } from "../function-calling/calculator";
 type Role = "developer" | "system" | "user" | "assistant" | "tool";
 
 env.config();
@@ -32,9 +34,33 @@ router.post("/", async function (ctx, next) {
   let responseMsg = "";
   ctx.res.statusCode = STATUS_CODE.SUCCESS;
   for await (const chunk of stream) {
-    const { content, role } = chunk.choices[0]?.delta;
-    ctx.res.write(content);
-    responseMsg += content;
+    const { content, role, tool_calls: tools } = chunk.choices[0]?.delta;
+    if (content) {
+      ctx.res.write(content);
+      responseMsg += content;
+    } else if (tools?.length) {
+      const functions = tools.map((v) => {
+        if (v.type === "function") {
+          return {
+            name: v.function?.name,
+            arguments: v.function?.arguments,
+          };
+        }
+      });
+      const cbMsg = functions
+        .map((v) => {
+          if (!toolsMap.has(v?.name || "")) {
+            return "";
+          } else {
+            const cb = toolsMap.get(v!.name!);
+            const res = cb?.call(null, arguments);
+            return res;
+          }
+        })
+        .join("");
+      responseMsg += cbMsg;
+      ctx.res.write(cbMsg);
+    }
   }
   historyMsg.push({ content: responseMsg, role: "assistant" });
   await DpQuestion?.create({
@@ -72,6 +98,7 @@ async function getDeepSeekResponse(msg: string) {
     model: "deepseek-chat",
     stream: true,
     temperature: 0.2,
+    tools: [...getWeather, ...getLocation],
   });
   return stream;
 }
